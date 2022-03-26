@@ -14,11 +14,11 @@ async function bootstrap() {
   const docConfig = new DocumentBuilder()
     .setTitle('Return0 API')
     .setDescription('Return0 API api doc')
-    .setVersion('1.0')
     .addBearerAuth()
     .build();
+
   const document = SwaggerModule.createDocument(app, docConfig);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('api-docs', app, document);
 
   await app.listen(config.get('PORT'));
 
