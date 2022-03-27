@@ -9,6 +9,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { CourseModule } from './course/course.module';
 import { ChapterModule } from './chapter/chapter.module';
 import { LessonModule } from './lesson/lesson.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 const config = new ConfigService();
 
@@ -18,6 +19,7 @@ const config = new ConfigService();
       envFilePath: ['.env.dev', '.env'],
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
     TypegooseModule.forRoot(config.get('DATABASE_URL')),
     UsersModule,
     AuthModule,
