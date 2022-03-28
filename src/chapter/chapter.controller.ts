@@ -9,7 +9,10 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ChapterService } from './chapter.service';
-import { CreateChapterDto } from './dto/create-chapter.dto';
+import {
+  CreateChapterDto,
+  updateMultipleChapterDto,
+} from './dto/create-chapter.dto';
 import { UpdateChapterDto } from './dto/update-chapter.dto';
 
 @Controller('chapters')
@@ -20,6 +23,11 @@ export class ChapterController {
   @Post()
   create(@Body() createChapterDto: CreateChapterDto) {
     return this.chapterService.create(createChapterDto);
+  }
+
+  @Post('update-chapters')
+  updateChapters(@Body() dto: updateMultipleChapterDto) {
+    return this.chapterService.updateChapters(dto);
   }
 
   @Get()
@@ -34,11 +42,11 @@ export class ChapterController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateChapterDto: UpdateChapterDto) {
-    return this.chapterService.update(+id, updateChapterDto);
+    return this.chapterService.update(id, updateChapterDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.chapterService.remove(+id);
+    return this.chapterService.remove(id);
   }
 }

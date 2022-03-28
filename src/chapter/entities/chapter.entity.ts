@@ -5,7 +5,10 @@ export class Chapter {
   @prop({ required: true })
   title: string;
 
-  @prop({ required: false })
+  @prop()
+  description: string;
+
+  @prop()
   order: number;
 
   @prop({ ref: () => Chapter, required: true })

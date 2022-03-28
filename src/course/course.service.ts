@@ -32,9 +32,9 @@ export class CourseService {
       })
       .populate({
         path: 'chapters',
-        // options: {
-        //   sort: { order: -1 },
-        // },
+        options: {
+          sort: { order: 1 },
+        },
       });
   }
 
