@@ -36,6 +36,13 @@ export class CourseService {
         options: {
           sort: { order: 1 },
         },
+        populate: {
+          path: 'lessons',
+          model: 'Lesson',
+          options: {
+            sort: { order: 1 },
+          },
+        },
       });
   }
 

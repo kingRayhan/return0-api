@@ -30,14 +30,9 @@ export class ChapterController {
     return this.chapterService.updateChapters(dto);
   }
 
-  @Get()
-  findAll() {
-    return this.chapterService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.chapterService.findOne(+id);
+  @Get(':courseId')
+  courseChapters(@Param('courseId') courseId: string) {
+    return this.chapterService.courseChapters(courseId);
   }
 
   @Patch(':id')

@@ -28,15 +28,17 @@ export class ChapterService {
         ? this.update(chapter._id, chapter)
         : this.model.create({ ...chapter, course: dto.courseId });
     });
+
     return 'Chapters updated successfully';
   }
 
-  findAll() {
-    return `This action returns all chapter`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} chapter`;
+  courseChapters(course_id: string) {
+    return this.model.find({ course: course_id }).populate({
+      path: 'lessons',
+      options: {
+        sort: { order: 1 },
+      },
+    });
   }
 
   update(_id: string, dto: UpdateChapterDto) {
