@@ -50,10 +50,18 @@ export class ChapterService {
   }
 
   async deleteMultipleChaptersByIds(ids: string[]) {
-    console.log(ids);
     const removed = await this.model.deleteMany({ _id: { $in: ids } });
     const msg = `This action removes ${removed.deletedCount} chapters`;
     Logger.log(msg, 'ChapterService/deleteMultipleChaptersByIds');
+    return msg;
+  }
+
+  async deleteMultipleChaptersByCourseIds(course_ids: string[]) {
+    const removed = await this.model.deleteMany({
+      course: { $in: course_ids },
+    });
+    const msg = `This action removes ${removed.deletedCount} chapters`;
+    Logger.log(msg, 'ChapterService/deleteMultipleChaptersByCourseIds');
     return msg;
   }
 }

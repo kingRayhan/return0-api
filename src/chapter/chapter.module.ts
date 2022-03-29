@@ -8,5 +8,6 @@ import { Chapter } from './entities/chapter.entity';
   imports: [TypegooseModule.forFeature([Chapter])],
   controllers: [ChapterController],
   providers: [ChapterService],
+  exports: [ChapterService],
 })
 export class ChapterModule {}

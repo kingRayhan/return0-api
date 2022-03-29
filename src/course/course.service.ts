@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import { NotFoundError } from 'rxjs';
+import { ChapterService } from 'src/chapter/chapter.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course } from './entities/course.entity';
@@ -10,6 +10,7 @@ import { Course } from './entities/course.entity';
 export class CourseService {
   constructor(
     @InjectModel(Course) private readonly model: ReturnModelType<typeof Course>,
+    private readonly chapterService: ChapterService,
   ) {}
 
   create(dto: CreateCourseDto) {
@@ -45,6 +46,8 @@ export class CourseService {
   async remove(id: string) {
     const exists = await this.model.exists({ _id: id });
     if (!exists) throw new NotFoundException();
-    return this.model.findByIdAndRemove(id);
+    await this.model.findByIdAndRemove(id);
+    await this.chapterService.deleteMultipleChaptersByCourseIds([id]);
+    return `This action removes a #${id} course`;
   }
 }
