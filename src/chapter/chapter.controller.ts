@@ -44,4 +44,9 @@ export class ChapterController {
   remove(@Param('id') id: string) {
     return this.chapterService.remove(id);
   }
+
+  @Get('/lessons/:chapterId')
+  getLessonsOfChapters(@Param('chapterId') chapterId: string) {
+    return this.chapterService.lessonsOfChapter(chapterId);
+  }
 }

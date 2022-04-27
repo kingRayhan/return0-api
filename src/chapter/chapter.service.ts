@@ -66,4 +66,10 @@ export class ChapterService {
     Logger.log(msg, 'ChapterService/deleteMultipleChaptersByCourseIds');
     return msg;
   }
+
+  async lessonsOfChapter(chapterId: string) {
+    return this.model.findById(chapterId).populate({
+      path: 'lessons',
+    });
+  }
 }

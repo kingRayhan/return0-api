@@ -1,4 +1,4 @@
-import { prop, Ref } from '@typegoose/typegoose';
+import { ModelOptions, prop, Ref } from '@typegoose/typegoose';
 import { Chapter } from 'src/chapter/entities/chapter.entity';
 
 export enum LessonType {
@@ -13,6 +13,13 @@ export enum LessonMediaSoruceType {
   EXTERNAL_URL = 'EXTERNAL_URL',
 }
 
+@ModelOptions({
+  schemaOptions: {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    timestamps: true,
+  },
+})
 export class Lesson {
   @prop()
   title: string;
@@ -46,6 +53,6 @@ export class Lesson {
   @prop()
   order: number;
 
-  @prop({ ref: () => Lesson, required: true })
+  @prop({ ref: () => Chapter, required: true })
   chapter: Ref<Chapter>;
 }

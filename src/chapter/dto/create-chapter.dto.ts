@@ -49,10 +49,10 @@ export class CreateChapterDto {
   @IsInt()
   public order: number;
 
-  // @ApiProperty()
-  // @IsNotEmpty()
-  // @IsMongoId()
-  // public course: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsMongoId()
+  public course: string;
 }
 
 export class updateMultipleChapterDto {

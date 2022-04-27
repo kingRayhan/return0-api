@@ -1,6 +1,14 @@
-import { prop, Ref } from '@typegoose/typegoose';
+import { ModelOptions, prop, Ref } from '@typegoose/typegoose';
+import { Course } from 'src/course/entities/course.entity';
 import { Lesson } from 'src/lesson/entities/lesson.entity';
 
+@ModelOptions({
+  schemaOptions: {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    timestamps: true,
+  },
+})
 export class Chapter {
   @prop({ required: true })
   title: string;
@@ -11,8 +19,8 @@ export class Chapter {
   @prop()
   order: number;
 
-  @prop({ ref: () => Chapter, required: true })
-  course: Ref<Chapter>;
+  @prop({ ref: () => Course, required: true })
+  course: Ref<Course>;
 
   @prop({ ref: () => Lesson, localField: '_id', foreignField: 'chapter' })
   lessons: Lesson[];
