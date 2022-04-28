@@ -1,6 +1,6 @@
 import { ModelOptions, prop, Ref } from '@typegoose/typegoose';
-import { Chapter } from 'src/chapter/entities/chapter.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Chapter } from '@/api/chapter/entities/chapter.entity';
+import { User } from '@/api/users/entities/user.entity';
 
 enum COURSE_TYPE {
   FREE = 'FREE',

@@ -1,5 +1,5 @@
 import { ModelOptions, prop, Ref } from '@typegoose/typegoose';
-import { Chapter } from 'src/chapter/entities/chapter.entity';
+import { Chapter } from '@/api/chapter/entities/chapter.entity';
 
 export enum LessonType {
   VIDEO = 'VIDEO',

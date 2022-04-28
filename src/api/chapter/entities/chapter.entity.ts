@@ -1,6 +1,6 @@
 import { ModelOptions, prop, Ref } from '@typegoose/typegoose';
-import { Course } from 'src/course/entities/course.entity';
-import { Lesson } from 'src/lesson/entities/lesson.entity';
+import { Course } from '@/api/course/entities/course.entity';
+import { Lesson } from '@/api/lesson/entities/lesson.entity';
 
 @ModelOptions({
   schemaOptions: {

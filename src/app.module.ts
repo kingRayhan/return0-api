@@ -3,12 +3,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { UsersModule } from '@/api/users/users.module';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { CourseModule } from './course/course.module';
-import { ChapterModule } from './chapter/chapter.module';
-import { LessonModule } from './lesson/lesson.module';
+import { CourseModule } from '@/api/course/course.module';
+import { ChapterModule } from '@/api/chapter/chapter.module';
+import { LessonModule } from '@/api/lesson/lesson.module';
 import { ScheduleModule } from '@nestjs/schedule';
 
 const config = new ConfigService();
@@ -16,13 +15,12 @@ const config = new ConfigService();
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.dev', '.env'],
+      envFilePath: ['.env.dev'],
       isGlobal: true,
     }),
     ScheduleModule.forRoot(),
     TypegooseModule.forRoot(config.get('DATABASE_URL')),
     UsersModule,
-    AuthModule,
     CourseModule,
     ChapterModule,
     LessonModule,
