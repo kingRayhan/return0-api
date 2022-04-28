@@ -9,6 +9,7 @@ import { CourseModule } from '@/api/course/course.module';
 import { ChapterModule } from '@/api/chapter/chapter.module';
 import { LessonModule } from '@/api/lesson/lesson.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { SessionModule } from '@/api/session/session.module';
 
 const config = new ConfigService();
 
@@ -20,6 +21,7 @@ const config = new ConfigService();
     }),
     ScheduleModule.forRoot(),
     TypegooseModule.forRoot(config.get('DATABASE_URL')),
+    SessionModule,
     UsersModule,
     CourseModule,
     ChapterModule,

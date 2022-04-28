@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './users.service';
-import { UsersController } from './users.controller';
+import { UserService } from './user.service';
+import { UserController } from './user.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { User } from './entities/user.entity';
-import { SessionModule } from '../session/session.module';
+import { SessionModule } from '@/api/session/session.module';
 
 @Module({
   imports: [TypegooseModule.forFeature([User]), SessionModule],
-  controllers: [UsersController],
+  controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
-export class UsersModule {}
+export class UserModule {}

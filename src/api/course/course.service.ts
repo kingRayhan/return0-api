@@ -24,12 +24,12 @@ export class CourseService {
     });
   }
 
-  findOne(id: string) {
+  courseDetailsWithChapters(id: string) {
     return this.model
       .findById(id)
       .populate({
         path: 'author',
-        select: 'username',
+        select: 'name username email',
       })
       .populate({
         path: 'chapters',
@@ -46,15 +46,14 @@ export class CourseService {
       });
   }
 
-  update(id: string, dto: UpdateCourseDto) {
-    return this.model.findByIdAndUpdate(id, dto, { new: true });
+  updateCourse(id: string, payload: UpdateCourseDto) {
+    return this.model.findByIdAndUpdate(id, payload, { new: true });
   }
 
   async remove(id: string) {
     const exists = await this.model.exists({ _id: id });
     if (!exists) throw new NotFoundException();
     await this.model.findByIdAndRemove(id);
-    await this.chapterService.deleteMultipleChaptersByCourseIds([id]);
-    return `This action removes a #${id} course`;
+    return `Course deleted`;
   }
 }

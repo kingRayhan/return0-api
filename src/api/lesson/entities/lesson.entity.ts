@@ -7,8 +7,8 @@ export enum LessonType {
 }
 
 export enum LessonMediaSoruceType {
-  VIMEO = 'VIMEO',
   YOUTUBE = 'YOUTUBE',
+  VIMEO = 'VIMEO',
   JW_PLAYER = 'JW_PLAYER',
   EXTERNAL_URL = 'EXTERNAL_URL',
 }
