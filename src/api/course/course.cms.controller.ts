@@ -8,24 +8,28 @@ import { UpdateCourseDto } from './dto/update-course.dto';
 export class CourseCMSController {
   constructor(private readonly courseService: CourseService) {}
 
+  // 🔒
   // TODO: permission -> CMS_VIEW_COURSES
   @Get('/')
   index() {
     return this.courseService.findAll();
   }
 
+  // TODO: 🔒
   // TODO: permission -> CMS_VIEW_COURSES
   @Get('/:id')
   details(@Param('id') id: string) {
     return this.courseService.courseDetailsWithChapters(id);
   }
 
+  // TODO: 🔒
   // TODO: permission -> CMS_VIEW_COURSES
   @Patch('/:id')
   update(@Param('id') id: string, @Body() payload: UpdateCourseDto) {
     return this.courseService.updateCourse(id, payload);
   }
 
+  // TODO: 🔒
   // TODO: permission -> CMS_VIEW_COURSES
   @Delete('/:id')
   remove(@Param('id') id: string) {
