@@ -24,7 +24,12 @@ export class CourseService {
     });
   }
 
-  courseDetailsWithChapters(id: string) {
+  /**
+   * Course details with chapters and lessons
+   * @param id course id
+   * @returns
+   */
+  courseDetailsWithChaptersAnsLessons(id: string) {
     return this.model
       .findById(id)
       .populate({
@@ -44,6 +49,14 @@ export class CourseService {
           },
         },
       });
+  }
+
+  /**
+   * Create Course
+   * @param payload CreateCourseDto
+   */
+  createCourse(payload: CreateCourseDto) {
+    return this.model.create(payload);
   }
 
   updateCourse(id: string, payload: UpdateCourseDto) {

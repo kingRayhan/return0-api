@@ -43,7 +43,7 @@ export class Course {
   public description: string;
 
   @prop({ ref: () => User })
-  public author: Ref<User>;
+  public author?: Ref<User>;
 
   @prop({ ref: () => Chapter, localField: '_id', foreignField: 'course' })
   public chapters: Chapter[];
