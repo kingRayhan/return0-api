@@ -1,19 +1,10 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ChapterService } from './chapter.service';
 import {
   CreateChapterDto,
-  updateMultipleChapterDto,
+  UpdateMultipleChapterDto,
 } from './dto/create-chapter.dto';
-import { UpdateChapterDto } from './dto/update-chapter.dto';
 
 @Controller('chapters')
 @ApiTags('chapter')
@@ -26,27 +17,7 @@ export class ChapterController {
   }
 
   @Post('update-chapters')
-  updateChapters(@Body() dto: updateMultipleChapterDto) {
+  updateChapters(@Body() dto: UpdateMultipleChapterDto) {
     return this.chapterService.updateChapters(dto);
-  }
-
-  @Get(':courseId')
-  courseChapters(@Param('courseId') courseId: string) {
-    return this.chapterService.courseChapters(courseId);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateChapterDto: UpdateChapterDto) {
-    return this.chapterService.update(id, updateChapterDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.chapterService.remove(id);
-  }
-
-  @Get('/lessons/:chapterId')
-  getLessonsOfChapters(@Param('chapterId') chapterId: string) {
-    return this.chapterService.lessonsOfChapter(chapterId);
   }
 }

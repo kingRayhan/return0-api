@@ -5,6 +5,7 @@ import { ChapterService } from '@/api/chapter/chapter.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course } from './entities/course.entity';
+import { CourseBuilderDTO } from './dto/coruse-builder.dto';
 
 @Injectable()
 export class CourseService {
@@ -59,14 +60,46 @@ export class CourseService {
     return this.model.create(payload);
   }
 
+  /**
+   * Update course
+   * @param id course id
+   * @param payload UpdateCourseDto
+   */
   updateCourse(id: string, payload: UpdateCourseDto) {
     return this.model.findByIdAndUpdate(id, payload, { new: true });
   }
 
+  /**
+   * Remove course
+   * @param id course id
+   */
   async remove(id: string) {
     const exists = await this.model.exists({ _id: id });
     if (!exists) throw new NotFoundException();
     await this.model.findByIdAndRemove(id);
-    return `Course deleted`;
+    return 'Course deleted';
+  }
+
+  /**
+   * Course chapters and lessons builder
+   * @param data CourseBuilderDTO
+   */
+  async buildCourseWithChaptersAndLessons(
+    courseId: string,
+    data: CourseBuilderDTO,
+  ) {
+    if (data.deleted_chapter_ids)
+      await this.chapterService.deleteMultipleChaptersByIds(
+        data.deleted_chapter_ids,
+      );
+
+    data.data.map((chapter) => {
+      return chapter?._id
+        ? this.chapterService.update(chapter._id, chapter)
+        : this.chapterService.create({ ...chapter, course: courseId });
+    });
+
+    return data.data;
+    return 'Chapters updated successfully';
   }
 }

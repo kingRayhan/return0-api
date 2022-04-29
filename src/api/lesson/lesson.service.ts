@@ -14,8 +14,6 @@ export class LessonService {
     @InjectModel(Lesson) private readonly model: ReturnModelType<typeof Lesson>,
   ) {}
 
-  // updateLessons()
-
   async createOrUpdateLessons(dto: CreateOrUpdateMultipleLessonDTO) {
     await this.deleteMultipleChaptersByIds(dto.deleted_ids);
 

@@ -55,7 +55,7 @@ export class CreateChapterDto {
   public course: string;
 }
 
-export class updateMultipleChapterDto {
+export class UpdateMultipleChapterDto {
   @ApiProperty()
   @IsArray()
   @ValidateNested({ each: true })

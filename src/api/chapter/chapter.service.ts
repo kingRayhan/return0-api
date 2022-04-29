@@ -3,7 +3,7 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import {
   CreateChapterDto,
-  updateMultipleChapterDto,
+  UpdateMultipleChapterDto,
 } from './dto/create-chapter.dto';
 import { UpdateChapterDto } from './dto/update-chapter.dto';
 import { Chapter } from './entities/chapter.entity';
@@ -19,7 +19,7 @@ export class ChapterService {
     return this.model.create(dto);
   }
 
-  async updateChapters(dto: updateMultipleChapterDto) {
+  async updateChapters(dto: UpdateMultipleChapterDto) {
     if (dto.deleted_chapter_ids)
       await this.deleteMultipleChaptersByIds(dto.deleted_chapter_ids);
 
@@ -32,17 +32,10 @@ export class ChapterService {
     return 'Chapters updated successfully';
   }
 
-  courseChapters(course_id: string) {
-    return this.model.find({ course: course_id }).populate({
-      path: 'lessons',
-      options: {
-        sort: { order: 1 },
-      },
-    });
-  }
-
-  update(_id: string, dto: UpdateChapterDto) {
-    this.model.updateOne({ _id }, { $set: dto });
+  async update(_id: string, dto: UpdateChapterDto) {
+    // console.log(dto);
+    const chapter = await this.model.updateOne({ _id }, { $set: dto });
+    console.log({ chapter });
     return `This action updates a #${_id} chapter`;
   }
 

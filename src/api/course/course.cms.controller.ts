@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CourseService } from './course.service';
+import { CourseBuilderDTO } from './dto/coruse-builder.dto';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 
@@ -43,6 +44,19 @@ export class CourseCMSController {
   @Post()
   create(@Body() payload: CreateCourseDto) {
     return this.courseService.createCourse(payload);
+  }
+
+  // TODO: 🔒
+  // TODO: permission -> BUILD_COURSES
+  @Post('builder/:courseId')
+  courseBuilder(
+    @Param('courseId') courseId: string,
+    @Body() payload: CourseBuilderDTO,
+  ) {
+    return this.courseService.buildCourseWithChaptersAndLessons(
+      courseId,
+      payload,
+    );
   }
 
   // TODO: 🔒
