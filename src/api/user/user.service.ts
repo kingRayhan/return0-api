@@ -14,10 +14,16 @@ export class UserService {
     private readonly model: ReturnModelType<typeof User>,
   ) {}
 
+
+  /**
+   * 
+   * @body createUserDto 
+   * @returns User
+   */
   async create(createUserDto: CreateUserDto) {
-    const payload = { ...createUserDto };
-    const user = await this.model.create(payload);
-    return user;
+    // const payload = { ...createUserDto };
+    // const user = await this.model.create(payload);
+    return createUserDto;
   }
 
   /**
