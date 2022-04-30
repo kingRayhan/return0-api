@@ -8,11 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { LessonService } from './lesson.service';
-import {
-  CreateLessonDto,
-  CreateOrUpdateMultipleLessonDTO,
-} from './dto/create-lesson.dto';
-import { UpdateLessonDto } from './dto/update-lesson.dto';
+import { CreateLessonDto } from './dto/create-lesson.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('lessons')
@@ -31,11 +27,6 @@ export class LessonController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.lessonService.findOne(id);
-  }
-
-  @Patch('bulk-update')
-  createOrUpdateLessons(@Body() dto: CreateOrUpdateMultipleLessonDTO) {
-    return this.lessonService.createOrUpdateLessons(dto);
   }
 
   @Delete(':id')

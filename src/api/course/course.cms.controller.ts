@@ -9,8 +9,9 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CourseService } from './course.service';
-import { CourseBuilderDTO } from './dto/coruse-builder.dto';
+import { ChapterBuilderDto } from './dto/chapter-builder.dto';
 import { CreateCourseDto } from './dto/create-course.dto';
+import { LessonBuilderDto } from './dto/lesson-builder.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Controller('cms/courses')
@@ -48,15 +49,22 @@ export class CourseCMSController {
 
   // TODO: 🔒
   // TODO: permission -> BUILD_COURSES
-  @Post('builder/:courseId')
-  courseBuilder(
+  @Post('chapters-builder/:courseId')
+  chapterBuilder(
     @Param('courseId') courseId: string,
-    @Body() payload: CourseBuilderDTO,
+    @Body() payload: ChapterBuilderDto,
   ) {
-    return this.courseService.buildCourseWithChaptersAndLessons(
-      courseId,
-      payload,
-    );
+    return this.courseService.courseChaptersBuilder(courseId, payload);
+  }
+
+  // TODO: 🔒
+  // TODO: permission -> BUILD_COURSES
+  @Post('lessons-builder/:chapterId')
+  lessonBuilder(
+    @Param('chapterId') chapterId: string,
+    @Body() payload: LessonBuilderDto,
+  ) {
+    // return this.courseService.chapterLessonBuilder(chapterId, payload);
   }
 
   // TODO: 🔒

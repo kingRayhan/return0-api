@@ -1,10 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import {
-  CreateChapterDto,
-  UpdateMultipleChapterDto,
-} from './dto/create-chapter.dto';
+import { CreateChapterDto } from './dto/create-chapter.dto';
 import { UpdateChapterDto } from './dto/update-chapter.dto';
 import { Chapter } from './entities/chapter.entity';
 
@@ -17,19 +14,6 @@ export class ChapterService {
 
   create(dto: CreateChapterDto) {
     return this.model.create(dto);
-  }
-
-  async updateChapters(dto: UpdateMultipleChapterDto) {
-    if (dto.deleted_chapter_ids)
-      await this.deleteMultipleChaptersByIds(dto.deleted_chapter_ids);
-
-    dto.data.map((chapter) => {
-      return chapter?._id
-        ? this.update(chapter._id, chapter)
-        : this.model.create({ ...chapter, course: dto.courseId });
-    });
-
-    return 'Chapters updated successfully';
   }
 
   async update(_id: string, dto: UpdateChapterDto) {
@@ -47,7 +31,7 @@ export class ChapterService {
   async deleteMultipleChaptersByIds(ids: string[]) {
     const removed = await this.model.deleteMany({ _id: { $in: ids } });
     const msg = `This action removes ${removed.deletedCount} chapters`;
-    Logger.log(msg, 'ChapterService/deleteMultipleChaptersByIds');
+    // Logger.log(msg, 'ChapterService/deleteMultipleChaptersByIds');
     return msg;
   }
 

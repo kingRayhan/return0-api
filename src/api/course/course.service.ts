@@ -5,7 +5,8 @@ import { ChapterService } from '@/api/chapter/chapter.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course } from './entities/course.entity';
-import { CourseBuilderDTO } from './dto/coruse-builder.dto';
+import { ChapterBuilderDto } from './dto/chapter-builder.dto';
+import { LessonBuilderDto } from './dto/lesson-builder.dto';
 
 @Injectable()
 export class CourseService {
@@ -84,10 +85,7 @@ export class CourseService {
    * Course chapters and lessons builder
    * @param data CourseBuilderDTO
    */
-  async buildCourseWithChaptersAndLessons(
-    courseId: string,
-    data: CourseBuilderDTO,
-  ) {
+  async courseChaptersBuilder(courseId: string, data: ChapterBuilderDto) {
     if (data.deleted_chapter_ids)
       await this.chapterService.deleteMultipleChaptersByIds(
         data.deleted_chapter_ids,
@@ -98,8 +96,10 @@ export class CourseService {
         ? this.chapterService.update(chapter._id, chapter)
         : this.chapterService.create({ ...chapter, course: courseId });
     });
-
-    return data.data;
     return 'Chapters updated successfully';
+  }
+
+  chapterLessonBuilder(chapterId: string, data: LessonBuilderDto) {
+    return data;
   }
 }

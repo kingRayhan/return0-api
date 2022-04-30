@@ -1,10 +1,7 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import {
-  CreateLessonDto,
-  CreateOrUpdateMultipleLessonDTO,
-} from './dto/create-lesson.dto';
+import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { Lesson } from './entities/lesson.entity';
 
@@ -14,17 +11,17 @@ export class LessonService {
     @InjectModel(Lesson) private readonly model: ReturnModelType<typeof Lesson>,
   ) {}
 
-  async createOrUpdateLessons(dto: CreateOrUpdateMultipleLessonDTO) {
-    await this.deleteMultipleChaptersByIds(dto.deleted_ids);
+  // async createOrUpdateLessons(dto: CreateOrUpdateMultipleLessonDTO) {
+  //   await this.deleteMultipleChaptersByIds(dto.deleted_ids);
 
-    dto.data.map((lesson) => {
-      return lesson?._id
-        ? this.update(lesson._id, lesson)
-        : this.model.create({ ...lesson, chapter: dto.chapterId });
-    });
+  //   dto.data.map((lesson) => {
+  //     return lesson?._id
+  //       ? this.update(lesson._id, lesson)
+  //       : this.model.create({ ...lesson, chapter: dto.chapterId });
+  //   });
 
-    return this.model.create(dto);
-  }
+  //   return this.model.create(dto);
+  // }
 
   create(dto: CreateLessonDto, chapterId: string) {
     return this.model.create({ ...dto, chapter: chapterId });

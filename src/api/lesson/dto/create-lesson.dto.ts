@@ -11,7 +11,7 @@ import {
 } from 'class-validator';
 import { LessonMediaSoruceType, LessonType } from '../entities/lesson.entity';
 
-class MediaSourcesDTO {
+export class MediaSourcesDTO {
   @ApiProperty({
     description: 'Vimeo video id',
   })
@@ -40,6 +40,8 @@ class MediaSourcesDTO {
 }
 
 export class CreateLessonDto {
+  @ApiProperty({ required: false })
+  @IsOptional()
   public _id?: string;
 
   @ApiProperty()
@@ -78,20 +80,4 @@ export class CreateLessonDto {
   @IsOptional()
   @ValidateNested({ each: true })
   public media_sources: MediaSourcesDTO;
-}
-
-export class CreateOrUpdateMultipleLessonDTO {
-  @ApiProperty()
-  @IsMongoId()
-  @IsNotEmpty()
-  chapterId: string;
-
-  @ApiProperty()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => CreateLessonDto)
-  data: CreateLessonDto[];
-
-  @ApiProperty()
-  deleted_ids: string[];
 }
