@@ -7,12 +7,14 @@ import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course } from './entities/course.entity';
 import { ChapterBuilderDto } from './dto/chapter-builder.dto';
 import { LessonBuilderDto } from './dto/lesson-builder.dto';
+import { LessonService } from '../lesson/lesson.service';
 
 @Injectable()
 export class CourseService {
   constructor(
     @InjectModel(Course) private readonly model: ReturnModelType<typeof Course>,
     private readonly chapterService: ChapterService,
+    private readonly lessonService: LessonService,
   ) {}
 
   create(dto: CreateCourseDto) {
@@ -99,7 +101,36 @@ export class CourseService {
     return 'Chapters updated successfully';
   }
 
-  chapterLessonBuilder(chapterId: string, data: LessonBuilderDto) {
-    return data;
+  /**
+   *  Chapter's lessions builder
+   * @param chapterId course id
+   * @param data LessonBuilderDto
+   */
+  async chapterLessonBuilder(chapterId: string, data: LessonBuilderDto) {
+    if (data.deleted_lesson_ids) {
+      await this.lessonService.deleteMultipleChaptersByIds(
+        data.deleted_lesson_ids,
+      );
+    }
+
+    data.data.forEach((lesson) => {
+      lesson?._id
+        ? this.lessonService.update(lesson._id, lesson)
+        : this.lessonService.create(lesson, chapterId);
+    });
+
+    return 'Lession updated';
   }
+
+  // async createOrUpdateLessons(dto: CreateOrUpdateMultipleLessonDTO) {
+  //   await this.deleteMultipleChaptersByIds(dto.deleted_ids);
+
+  //   dto.data.map((lesson) => {
+  //     return lesson?._id
+  //       ? this.update(lesson._id, lesson)
+  //       : this.model.create({ ...lesson, chapter: dto.chapterId });
+  //   });
+
+  //   return this.model.create(dto);
+  // }
 }

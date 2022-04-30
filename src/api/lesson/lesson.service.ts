@@ -11,20 +11,10 @@ export class LessonService {
     @InjectModel(Lesson) private readonly model: ReturnModelType<typeof Lesson>,
   ) {}
 
-  // async createOrUpdateLessons(dto: CreateOrUpdateMultipleLessonDTO) {
-  //   await this.deleteMultipleChaptersByIds(dto.deleted_ids);
-
-  //   dto.data.map((lesson) => {
-  //     return lesson?._id
-  //       ? this.update(lesson._id, lesson)
-  //       : this.model.create({ ...lesson, chapter: dto.chapterId });
-  //   });
-
-  //   return this.model.create(dto);
-  // }
-
-  create(dto: CreateLessonDto, chapterId: string) {
-    return this.model.create({ ...dto, chapter: chapterId });
+  async create(dto: CreateLessonDto, chapterId: string) {
+    const lession = await this.model.create({ ...dto, chapter: chapterId });
+    // console.log(lession);
+    return lession;
   }
 
   findAll() {
@@ -34,20 +24,27 @@ export class LessonService {
   async findOne(id: string) {
     const exists = await this.model.exists({ _id: id });
     if (!exists) throw new NotFoundException();
-
     return this.model.findById(id);
   }
 
   async update(id: string, updateLessonDto: UpdateLessonDto) {
     const exists = await this.model.exists({ _id: id });
     if (!exists) throw new NotFoundException();
-    return this.model.findByIdAndUpdate(id, updateLessonDto, { new: true });
+    const updatedLesson = await this.model.findByIdAndUpdate(
+      id,
+      updateLessonDto,
+      {
+        new: true,
+      },
+    );
+    // console.log(updatedLesson);
+    return updatedLesson;
   }
 
   async deleteMultipleChaptersByIds(ids: string[]) {
     const removed = await this.model.deleteMany({ _id: { $in: ids } });
     const msg = `This action removes ${removed.deletedCount} lessons`;
-    Logger.log(msg, 'LessonService/deleteMultipleChaptersByIds');
+    // Logger.log(msg, 'LessonService/deleteMultipleChaptersByIds');
     return msg;
   }
 

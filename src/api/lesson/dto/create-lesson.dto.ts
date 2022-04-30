@@ -53,6 +53,11 @@ export class CreateLessonDto {
   @IsBoolean()
   public isPublished: boolean;
 
+  @ApiProperty({ default: false })
+  @IsOptional()
+  @IsBoolean()
+  public isFreePreview: boolean;
+
   @ApiProperty()
   @IsOptional()
   public excerpt: string;

@@ -27,6 +27,9 @@ export class Lesson {
   @prop({ default: false })
   public isPublished: boolean;
 
+  @prop({ default: false })
+  public isFreePreview: boolean;
+
   @prop({ trim: true })
   public excerpt: string;
 

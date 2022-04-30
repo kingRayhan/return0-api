@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
@@ -50,6 +51,7 @@ export class CourseCMSController {
   // TODO: 🔒
   // TODO: permission -> BUILD_COURSES
   @Post('chapters-builder/:courseId')
+  @HttpCode(200)
   chapterBuilder(
     @Param('courseId') courseId: string,
     @Body() payload: ChapterBuilderDto,
@@ -60,11 +62,12 @@ export class CourseCMSController {
   // TODO: 🔒
   // TODO: permission -> BUILD_COURSES
   @Post('lessons-builder/:chapterId')
+  @HttpCode(200)
   lessonBuilder(
     @Param('chapterId') chapterId: string,
     @Body() payload: LessonBuilderDto,
   ) {
-    // return this.courseService.chapterLessonBuilder(chapterId, payload);
+    return this.courseService.chapterLessonBuilder(chapterId, payload);
   }
 
   // TODO: 🔒

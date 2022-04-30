@@ -8,5 +8,6 @@ import { Lesson } from './entities/lesson.entity';
   controllers: [LessonController],
   providers: [LessonService],
   imports: [TypegooseModule.forFeature([Lesson])],
+  exports: [LessonService],
 })
 export class LessonModule {}
