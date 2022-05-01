@@ -12,7 +12,7 @@ export class UserService {
   constructor(
     @InjectModel(User)
     private readonly model: ReturnModelType<typeof User>,
-  ) {}
+  ) { }
 
 
   /**
@@ -21,19 +21,65 @@ export class UserService {
    * @returns User
    */
   async create(createUserDto: CreateUserDto) {
-    // const payload = { ...createUserDto };
-    // const user = await this.model.create(payload);
-    return createUserDto;
+
+    try {
+      const user = await this.model.create(createUserDto)
+      return user;
+    } catch (error) {
+      throw new Error(error.message)
+    }
   }
+
+
+  /**
+   * 
+   * @param empty
+   * @returns User []
+   */
+
+
+  async index() {
+    try {
+      return await this.model.find()
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
+
 
   /**
    * Find User by email
    * @param email string
    * @returns
    */
-  findByEmail(email: string) {
-    return this.model.findOne({ email });
+  async findByEmail(email: string) {
+
+    const user = await this.model.findOne({ email });
+    if (!user) throw new NotFoundException('User not found')
+    return user;
+
   }
+  
+
+  /**
+   * User Delete
+   * @param id 
+   * @returns true
+   */
+
+  async destory(_id:string){
+    const is_deleted = await this.model.findByIdAndDelete(_id)
+
+    if(!is_deleted) throw new ForbiddenException()
+
+    return {
+      message: 'Successfully remove'
+    }
+
+  }
+
+
 
   /**
    * Find User by id

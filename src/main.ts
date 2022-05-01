@@ -5,14 +5,20 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
+import { QueryErrorFilter } from './common/utils/filters/mongoose.filter';
+import { ClassValidatorPipe } from './common/utils/pipes/ClassValidatorPipe';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.enableCors({ origin: '*' });
-  app.useGlobalPipes(new ValidationPipe());
+ 
+
+  app.useGlobalPipes(new ClassValidatorPipe());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalFilters(new QueryErrorFilter());
+
 
   const config = new ConfigService();
-
+  app.enableCors({ origin: '*' });
   const docConfig = new DocumentBuilder()
     .setTitle('Return0 API')
     .setDescription('Return0 API api doc')
