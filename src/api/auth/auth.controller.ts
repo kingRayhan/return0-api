@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
+import { LoginRequestDto } from './dto/login-request.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 
 @ApiTags('Auth')
@@ -12,6 +13,11 @@ export class AuthController {
   @Post('register')
   create(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.create(createAuthDto);
+  }
+
+  @Post('/otp-login-request')
+  otpLoginRequest(@Body() data: LoginRequestDto){
+    return this.authService.loginRequest(data)
   }
 
   // @Get()

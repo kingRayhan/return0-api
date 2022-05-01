@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
+import { LoginRequestDto } from './dto/login-request.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 
 @Injectable()
@@ -12,6 +13,10 @@ export class AuthService {
     
     return this.userService.create(createAuthDto)
 
+  }
+
+  loginRequest(data: LoginRequestDto){
+    return data
   }
 
   findAll() {
