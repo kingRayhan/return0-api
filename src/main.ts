@@ -22,7 +22,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, docConfig);
   SwaggerModule.setup('api-docs', app, document);
 
-  await app.listen(config.get('PORT'));
+  await app.listen(config.get('PORT') || 8001);
 
   const cow = cowSay.say({
     text: `Server running: ${config.get('APP_URL')} | ${config.get(
