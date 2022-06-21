@@ -13,5 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: npm install --force
+      working-directory: /home/rayhan/apps
     - run: npm run build
     - run: npm start
