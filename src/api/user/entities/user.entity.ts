@@ -30,7 +30,7 @@ export enum gender {
   this.username = slugify(this.name, true);
 })
 @plugin(UniqueValidator, { message: '{PATH} must need to be unique.' })
-@index({ email: 1, username: 1 }, { unique: true })
+// @index({ email: 1, username: 1 }, { unique: true })
 export class User {
   @prop()
   avatar?: string;
